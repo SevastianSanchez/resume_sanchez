@@ -17,20 +17,14 @@ You can download my resume in PDF format from the assets folder or through the d
 ```
 resume_sanchez/
 ├── index.html          # Main HTML resume
-├── style.css           # Styling for the resume
+├── style.css           # Styling 
 ├── assets/             # Folder for PDF and other assets
-│   └── README.md       # Instructions for adding PDF
-├── README.md           # This file
+│   └── README.md       # Adding Resume PDF 
+├── README.md           # Instructions
 └── LICENSE             # MIT License
 ```
 
-## 🚀 How to Use
-
-1. **View Online**: Visit the GitHub Pages link above
-2. **Download PDF**: Click the download button on the resume page
-3. **Customize**: Fork this repository and update with your own information
-
-## 🔧 Customization
+## 🔧 Customization `[Internal]`
 
 To customize this resume with your own information:
 
@@ -38,18 +32,15 @@ To customize this resume with your own information:
 2. Modify `style.css` to change colors, fonts, or layout
 3. Add your PDF resume to the `assets/` folder (name it `resume.pdf`)
 
-## 📝 Adding Your PDF Resume
+## 📝 Adding Your PDF Resume `[Internal]`
 
-1. Place your PDF resume in the `assets/` folder
+1. Place PDF resume in the `assets/` folder
 2. Name it `resume.pdf` (or update the link in `index.html`)
 3. The download button will automatically link to your PDF
 
 ## 📱 Features
-
-- ✅ Clean, professional design
 - ✅ Responsive layout (mobile-friendly)
 - ✅ PDF download option
-- ✅ Easy to customize
 - ✅ Print-friendly styles
 - ✅ Modern gradient design
 
@@ -59,4 +50,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Note**: This is a template resume. Please update the content in `index.html` with your actual information, or upload your PDF resume to the `assets/` folder to use as reference.
+**Note**: This repository is for resume viewing purposes only. No additional projects/assets exist in this repository. 
