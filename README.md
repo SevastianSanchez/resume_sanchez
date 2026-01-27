@@ -46,7 +46,7 @@ To customize this resume with your own information:
 
 ## License 📄
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+#### This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 ---
 
 **Note**: This repository is for resume viewing purposes only. No additional projects/assets exist in this repository. 
