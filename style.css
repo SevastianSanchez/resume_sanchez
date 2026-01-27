@@ -1,0 +1,292 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+/* Header Styles */
+header {
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.contact-info p {
+    font-size: 0.95em;
+    color: #555;
+}
+
+.contact-info a {
+    color: #667eea;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact-info a:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+.pdf-download {
+    margin-top: 15px;
+}
+
+.download-button {
+    display: inline-block;
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.download-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+/* Section Styles */
+section {
+    margin-bottom: 35px;
+}
+
+section h2 {
+    font-size: 1.8em;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+}
+
+section h2::before {
+    content: '';
+    width: 5px;
+    height: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin-right: 15px;
+    border-radius: 3px;
+}
+
+/* Summary Section */
+.summary p {
+    font-size: 1.1em;
+    color: #555;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+/* Experience Section */
+.job {
+    margin-bottom: 30px;
+    padding-left: 20px;
+    border-left: 3px solid #667eea;
+}
+
+.job h3 {
+    font-size: 1.4em;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.job .company {
+    font-size: 1.1em;
+    color: #667eea;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.job .date {
+    font-size: 0.95em;
+    color: #888;
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.job ul {
+    list-style-position: inside;
+    padding-left: 20px;
+}
+
+.job ul li {
+    margin-bottom: 8px;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Education Section */
+.degree {
+    margin-bottom: 25px;
+    padding-left: 20px;
+    border-left: 3px solid #764ba2;
+}
+
+.degree h3 {
+    font-size: 1.3em;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.degree .institution {
+    font-size: 1.1em;
+    color: #764ba2;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.degree .date {
+    font-size: 0.95em;
+    color: #888;
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.degree p:last-child {
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Skills Section */
+.skill-category {
+    margin-bottom: 20px;
+}
+
+.skill-category h3 {
+    font-size: 1.2em;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.skill-category p {
+    color: #555;
+    line-height: 1.8;
+    padding-left: 20px;
+}
+
+/* Projects Section */
+.project {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    border-left: 4px solid #667eea;
+}
+
+.project h3 {
+    font-size: 1.3em;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.project-description {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.project .technologies {
+    font-size: 0.95em;
+    color: #667eea;
+    font-weight: 600;
+}
+
+/* Footer */
+footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px solid #e0e0e0;
+    text-align: center;
+    color: #888;
+    font-size: 0.9em;
+}
+
+footer p {
+    margin-bottom: 5px;
+}
+
+footer em {
+    color: #667eea;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 25px;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    .contact-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    section h2 {
+        font-size: 1.5em;
+    }
+
+    .job h3, .degree h3, .project h3 {
+        font-size: 1.2em;
+    }
+}
+
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .container {
+        box-shadow: none;
+        padding: 20px;
+    }
+
+    .download-button {
+        display: none;
+    }
+}
