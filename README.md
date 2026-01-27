@@ -4,7 +4,7 @@ Welcome to my professional resume repository! This repository hosts my resume in
 
 ## 🌐 View Resume Online
 
-👉 **[View My Resume](https://sevastianSanchez.github.io/resume_sanchez/)** (GitHub Pages)
+👉 **[View My Resume](https://sevastiansanchez.github.io/resume_sanchez/)** (GitHub Pages)
 
 Or view the `index.html` file directly in this repository.
 

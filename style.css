@@ -112,7 +112,6 @@ section h2::before {
     font-size: 1.1em;
     color: #555;
     line-height: 1.8;
-    text-align: justify;
 }
 
 /* Experience Section */
@@ -137,7 +136,7 @@ section h2::before {
 
 .job .date {
     font-size: 0.95em;
-    color: #888;
+    color: #666;
     font-style: italic;
     margin-bottom: 15px;
 }
@@ -175,7 +174,7 @@ section h2::before {
 
 .degree .date {
     font-size: 0.95em;
-    color: #888;
+    color: #666;
     font-style: italic;
     margin-bottom: 10px;
 }
@@ -235,7 +234,7 @@ footer {
     padding-top: 20px;
     border-top: 2px solid #e0e0e0;
     text-align: center;
-    color: #888;
+    color: #666;
     font-size: 0.9em;
 }
 
