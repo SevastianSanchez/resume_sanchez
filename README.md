@@ -1,18 +1,24 @@
-# Resume - Sevastian Sanchez
+# Sevastian Sanchez – Resume 
 
 Welcome to my professional resume repository! This repository hosts my resume in HTML format for easy viewing on GitHub.
 
-## 🌐 View Resume Online
+## View Resume Online 🌐
 
-👉 **[View My Resume](https://sevastiansanchez.github.io/resume_sanchez/)** (GitHub Pages)
+**[Click to View Resume](https://sevastiansanchez.github.io/resume_sanchez/)** 
 
 Or view the `index.html` file directly in this repository.
 
-## 📄 Download PDF
+## Download PDF 📄
 
 You can download my resume in PDF format from the assets folder or through the download button on the HTML resume page.
 
-## 📂 Repository Structure
+## Features 📱
+- ✅ Responsive layout (mobile-friendly)
+- ✅ PDF download option
+- ✅ Print-friendly styles
+- ✅ Modern gradient design
+
+## Repository Structure 📂
 
 ```
 resume_sanchez/
@@ -24,7 +30,7 @@ resume_sanchez/
 └── LICENSE             # MIT License
 ```
 
-## 🔧 Customization `[Internal]`
+## Customization `[Internal]` 🔧
 
 To customize this resume with your own information:
 
@@ -32,22 +38,15 @@ To customize this resume with your own information:
 2. Modify `style.css` to change colors, fonts, or layout
 3. Add your PDF resume to the `assets/` folder (name it `resume.pdf`)
 
-## 📝 Adding Your PDF Resume `[Internal]`
+## Adding PDF Resume `[Internal]` 📝
 
 1. Place PDF resume in the `assets/` folder
 2. Name it `resume.pdf` (or update the link in `index.html`)
 3. The download button will automatically link to your PDF
 
-## 📱 Features
-- ✅ Responsive layout (mobile-friendly)
-- ✅ PDF download option
-- ✅ Print-friendly styles
-- ✅ Modern gradient design
-
-## 📄 License
+## License 📄
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ---
 
 **Note**: This repository is for resume viewing purposes only. No additional projects/assets exist in this repository. 
