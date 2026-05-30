@@ -17,6 +17,7 @@ You can download my resume in PDF format from the assets folder or through the d
 - ✅ PDF download option
 - ✅ Print-friendly styles
 - ✅ Modern gradient design
+- ✅ Automated PDF-to-HTML resume generation via GitHub Actions
 
 ## Repository Structure 📂
 
@@ -41,8 +42,9 @@ To customize this resume with your own information:
 ## Adding PDF Resume `[Internal]` 📝
 
 1. Place PDF resume in the `assets/` folder
-2. Name it `resume.pdf` (or update the link in `index.html`)
-3. The download button will automatically link to your PDF
+2. Name it `resume.pdf`
+3. Commit and push your changes
+4. GitHub Actions automatically regenerates `index.html` from `assets/resume.pdf` and commits the HTML update back to the repository
 
 ## License 📄
 
