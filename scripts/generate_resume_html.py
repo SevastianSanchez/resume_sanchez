@@ -4,6 +4,7 @@ import datetime
 import html
 import re
 from pathlib import Path
+from urllib.parse import urlparse, urlunparse
 
 import pdfplumber
 
@@ -15,6 +16,10 @@ URL_PATTERN = re.compile(r"https?://\S+")
 PHONE_PATTERN = re.compile(r"\+?\d[\d\-()\s]{7,}\d")
 EMAIL_PATTERN = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 LOCATION_PATTERN = re.compile(r"[A-Za-z .'-]+,\s?[A-Z]{2}(?:\s\d{5})?$")
+LINKEDIN_PATTERN = re.compile(r"(?:https?://)?(?:www\.)?linkedin\.com/[^\s|]+", re.IGNORECASE)
+GITHUB_PATTERN = re.compile(r"(?:https?://)?(?:www\.)?github\.com/[^\s|]+", re.IGNORECASE)
+# Typical resume header occupies the first few lines before the first section heading.
+HEADER_FALLBACK_LINES = 5
 
 
 def normalize_text(text: str) -> str:
@@ -71,13 +76,13 @@ def split_title_date(value: str) -> tuple[str, str]:
         return value.strip(), ""
     title = value[: match.start()].strip(" ,-|")
     date = value[match.start() :].strip()
-    if re.search(r"\d{4}", date):
+    if re.search(r"\b\d{4}\b", date):
         return title, date
     return value.strip(), ""
 
 
 def parse_header(lines: list[str]) -> dict:
-    education_idx = lines.index("EDUCATION") if "EDUCATION" in lines else min(5, len(lines))
+    education_idx = lines.index("EDUCATION") if "EDUCATION" in lines else min(HEADER_FALLBACK_LINES, len(lines))
     top = lines[:education_idx]
 
     name = top[0] if top else "Resume"
@@ -97,10 +102,14 @@ def parse_header(lines: list[str]) -> dict:
             m = PHONE_PATTERN.search(line)
             if m:
                 phone = m.group(0)
-        if "linkedin.com" in line.lower():
-            linkedin = line.split("|")[0].strip() if "|" in line else line.strip()
-        if "github.com" in line.lower():
-            github = line.split("|")[-1].strip()
+        if not linkedin:
+            m = LINKEDIN_PATTERN.search(line)
+            if m:
+                linkedin = m.group(0).rstrip(".,);")
+        if not github:
+            m = GITHUB_PATTERN.search(line)
+            if m:
+                github = m.group(0).rstrip(".,);")
 
     return {
         "name": name,
@@ -153,7 +162,7 @@ def parse_experience(lines: list[str]) -> list[dict]:
 
 
 def is_education_header(value: str) -> bool:
-    return "UNIVERSITY" in value or "COLLEGE" in value
+    return any(token in value for token in ("UNIVERSITY", "COLLEGE", "INSTITUTE", "SCHOOL"))
 
 
 def parse_education(lines: list[str]) -> list[dict]:
@@ -183,7 +192,15 @@ def parse_education(lines: list[str]) -> list[dict]:
 
         details = []
         while i < len(lines) and not is_education_header(lines[i]):
-            details.append(lines[i])
+            if details and (
+                details[-1].endswith(",")
+                or details[-1].endswith("-")
+                or details[-1].endswith("(")
+                or lines[i][0].islower()
+            ):
+                details[-1] = f"{details[-1]} {lines[i]}".strip()
+            else:
+                details.append(lines[i])
             i += 1
 
         entries.append(
@@ -273,6 +290,7 @@ def parse_projects(lines: list[str]) -> list[dict]:
 
 
 def parse_publications(lines: list[str], name: str) -> list[dict]:
+    surname = name.split()[-1] if name else ""
     filtered = []
     for line in lines:
         lower = line.lower()
@@ -280,7 +298,7 @@ def parse_publications(lines: list[str], name: str) -> list[dict]:
             continue
         if looks_like_location(line):
             continue
-        if "linkedin.com" in lower or "github.com" in lower:
+        if LINKEDIN_PATTERN.search(line) or GITHUB_PATTERN.search(line):
             continue
         if EMAIL_PATTERN.search(line) or PHONE_PATTERN.search(line):
             continue
@@ -289,7 +307,8 @@ def parse_publications(lines: list[str], name: str) -> list[dict]:
     entries = []
     current = ""
     for line in filtered:
-        if line.startswith("Sanchez") and current:
+        is_new_entry = bool(surname) and line.lower().startswith(surname.lower())
+        if is_new_entry and current:
             entries.append(current.strip())
             current = line
         else:
@@ -361,22 +380,38 @@ def build_resume_data(pdf_path: Path) -> dict:
 
     text = normalize_text(text)
     lines = normalize_lines(text)
+    header = parse_header(lines)
 
     return {
-        "header": parse_header(lines),
+        "header": header,
         "education": parse_education(section(lines, "EDUCATION", ["RELEVANT EXPERIENCE"])),
         "experience": parse_experience(section(lines, "RELEVANT EXPERIENCE", ["PUBLICATIONS"])),
-        "publications": parse_publications(section(lines, "PUBLICATIONS", ["PROJECTS"]), parse_header(lines)["name"]),
+        "publications": parse_publications(section(lines, "PUBLICATIONS", ["PROJECTS"]), header["name"]),
         "projects": parse_projects(section(lines, "PROJECTS", ["ADDITIONAL INFORMATION"])),
         "skills": parse_skills(section(lines, "ADDITIONAL INFORMATION", [])),
     }
 
 
+def validate_and_format_profile_url(value: str, allowed_domain: str) -> tuple[str, str]:
+    if not value:
+        return "", ""
+    candidate = value.strip().rstrip(".,);")
+    if not candidate.startswith(("http://", "https://")):
+        candidate = f"https://{candidate}"
+    parsed = urlparse(candidate)
+    host = parsed.netloc.lower()
+    if host not in {allowed_domain, f"www.{allowed_domain}"}:
+        return "", ""
+    if not parsed.path or parsed.path == "/":
+        return "", ""
+    href = urlunparse(("https", parsed.netloc, parsed.path, parsed.params, parsed.query, parsed.fragment))
+    display = f"{allowed_domain}{parsed.path}".rstrip("/")
+    return href, display
+
+
 def render_header(header: dict) -> str:
-    linkedin = header.get("linkedin", "")
-    github = header.get("github", "")
-    linkedin_href = linkedin if linkedin.startswith("http") else (f"https://{linkedin}" if linkedin else "")
-    github_href = github if github.startswith("http") else (f"https://{github}" if github else "")
+    linkedin_href, linkedin_text = validate_and_format_profile_url(header.get("linkedin", ""), "linkedin.com")
+    github_href, github_text = validate_and_format_profile_url(header.get("github", ""), "github.com")
     contact_line = " | ".join(part for part in [header.get("location", ""), header.get("phone", "")] if part)
 
     return "\n".join(
@@ -386,8 +421,8 @@ def render_header(header: dict) -> str:
             '            <div class="contact-info">',
             f"                <p>{html.escape(contact_line)}</p>",
             f"                <p>Email: <a href=\"mailto:{html.escape(header.get('email', ''))}\">{html.escape(header.get('email', ''))}</a></p>",
-            f"                <p>LinkedIn: <a href=\"{html.escape(linkedin_href)}\" target=\"_blank\" rel=\"noopener noreferrer\">{html.escape(linkedin)}</a></p>",
-            f"                <p>GitHub: <a href=\"{html.escape(github_href)}\" target=\"_blank\" rel=\"noopener noreferrer\">{html.escape(github)}</a></p>",
+            f"                <p>LinkedIn: <a href=\"{html.escape(linkedin_href)}\" target=\"_blank\" rel=\"noopener noreferrer\">{html.escape(linkedin_text)}</a></p>",
+            f"                <p>GitHub: <a href=\"{html.escape(github_href)}\" target=\"_blank\" rel=\"noopener noreferrer\">{html.escape(github_text)}</a></p>",
             "            </div>",
             '            <div class="pdf-download">',
             '                <a href="assets/resume.pdf" class="download-button" download aria-label="Download resume in PDF format">Download PDF Resume</a>',
