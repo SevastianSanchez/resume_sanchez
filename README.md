@@ -10,14 +10,13 @@ Or view the `index.html` file directly in this repository.
 
 ## Download PDF 📄
 
-You can download my resume in PDF format from the assets folder or through the download button on the HTML resume page.
+You can download my resume in PDF format through the download button on the HTML resume page.
 
 ## Features 📱
-- ✅ Responsive layout (mobile-friendly)
+- ✅ Mobile-friendly
 - ✅ PDF download option
 - ✅ Print-friendly styles
-- ✅ Modern gradient design
-- ✅ Automated PDF-to-HTML resume generation via GitHub Actions
+- ✅ Automatically updates PDF-to-HTML resume generation for up-to-date experience
 
 ## Repository Structure 📂
 
