@@ -228,6 +228,10 @@ section h2::before {
     font-weight: 600;
 }
 
+.publication {
+    margin-bottom: 1.5rem;
+}
+
 /* Footer */
 footer {
     margin-top: 40px;
